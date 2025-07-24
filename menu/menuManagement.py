@@ -28,7 +28,7 @@ def addMenuItem():
     saveMenu(menu)
     print("Item add successfully!!")
     
-def updateMenu():
+def updateMenuItem():
     menu = loadMenu()
     displayMenu()
     IDtoUpdate = int(input("Enter ID to update: "))
@@ -42,4 +42,39 @@ def updateMenu():
             return
     print("Item not found.")
 
+def deleteMenuItem():
+    menu = loadMenu()
+    displayMenu()
+    IDtoDelete = int(input("enter ID to delete: "))
+    newMenu = [item for item in menu if item["id"] != IDtoDelete]
+    if len(newMenu) != len(menu):
+        saveMenu(newMenu)
+        print("Item delete successfully!! ")
+    else:
+        print("Item not found.")
+
+def adminMenu():
+    while True:
+        print("\n------ Admin Menu -------")
+        print("1 - View menu")
+        print("2 - Add menu item")
+        print("3 - Update menu item")
+        print("4 - Delete menu item")
+        print("5 - Exit")
+
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            displayMenu()
+        elif choice == 2:
+            addMenuItem()
+        elif choice == 3:
+            updateMenuItem()
+        elif choice == 4:
+            deleteMenuItem()
+        elif choice == 5:
+            break
+        else:
+            print("Invalid choice, try again")
+            
 
