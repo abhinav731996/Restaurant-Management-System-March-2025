@@ -22,7 +22,7 @@
 # if flag == 0:
 #     print("Invalid credentials. Try again.")
 
-# from menu.menuManagement import loadMenu
+# from menu.menuManagement import loadMenu\
 import json
 
 def login():
@@ -37,35 +37,12 @@ def login():
     password = input("Password: ")
 
     for user in users:
-        if user["username"] == username and user["password"] == password and user["role"] == "admin" :
+        if user["username"] == username and user["password"] == password:
             print(f"\nLogin successfully. Welcome {username}")
-            
-
             return user
     
     print("\nInvalid credentials.")
     
     return None
-
-def regisNew():
-    with open("data/user.json", "r") as files:
-        content = files.read()
-        data = json.loads(content)
-
-
-    # listdata = []
-    with open("data/user.json", "a") as files:
-        file={}
-        file['id']= input("Enter ID: ")
-        file['password'] = input("Enter password: ")
-        file["role"] = input("Enter role: ")
-
-        inital=json.dumps(file,indent=4)
-        data.append(dataf)
-        
-
-        files.write(dataf)
          
 
-regisNew()
-        

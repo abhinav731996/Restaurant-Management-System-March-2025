@@ -2,6 +2,7 @@ import json
 import os
 from menu.menuManagement import displayMenu, loadMenu
 from bill.generatingBill import generatingBill
+from table.tableBooking import tableBookingMenu
 
 orderFile = "data/order.json"
 
@@ -34,7 +35,7 @@ def takeOrder():
         item = next((i for i in menu if str(i["id"])==itemId), None)
 
         if item:
-            qty = int(input(f"Enter quantity for{item["name"]}: "))
+            qty = float(input(f"Enter quantity for{item["name"]}: "))
             total += item["price"]*qty
             orderItem.append({
                 "itemId": item["id"],
@@ -73,7 +74,7 @@ def viewAllOrders():
     print("\n------ All order ------")
 
     for order in order:
-        print(f"\nOrder id: {order["orderId"]}, Customer: {order["customerName"]}, Total: {order["total"]}")
+        print(f"\nOrder id: {order["order_id"]}, Customer: {order["customer_name"]}, Total: {order["total"]}")
         for item in order["items"]:
             print(f"  {item["name"]} x {item["quantity"]} = {item["price"] * item["quantity"]}")
         print("-" * 40)
@@ -84,7 +85,8 @@ def staffMenu():
         print("1 - Take order")
         print("2 - View all order")
         print("3 - Generate bill")
-        print("4 - Exit")
+        print("4 - Table Booking")
+        print("5 - Exit")
 
         choice = int(input("Enter your choice: "))
 
@@ -95,6 +97,8 @@ def staffMenu():
         elif choice == 3:
             generatingBill()
         elif choice == 4:
+            tableBookingMenu()
+        elif choice == 5:
             break
         else:
             print("Invalid choice, try again!!")

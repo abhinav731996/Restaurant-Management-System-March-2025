@@ -20,9 +20,9 @@ def displayMenu():
 
 def addMenuItem():
     menu = loadMenu()
-    newId = max([item['id'] for item in menu], default=0)+1
+    newId = int(max([item['id'] for item in menu], default=0)+1)
     name = input("Enter item name: ")
-    price = float(input("Enter price: "))
+    price = int(input("Enter price: "))
     menu.append({"id":newId, "name": name, "price":price})
 
     saveMenu(menu)

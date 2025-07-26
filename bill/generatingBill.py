@@ -39,8 +39,8 @@ def generatingBill():
     grandTotal = subTotal + tax - discount
 
     print("\n------ Customer bill ------")
-    print(f"Customer : {order["customerName"]}")
-    print(f"Order ID: {order['orderId']}")
+    print(f"Customer : {order["customer_name"]}")
+    print(f"Order ID: {order['order_id']}")
     print("-" * 30)
     for item in order['items']:
         line_total = item["price"] * item["quantity"]

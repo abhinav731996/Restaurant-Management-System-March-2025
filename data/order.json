@@ -1,1 +1,67 @@
-[]
+[
+    {
+        "order_id": 1,
+        "customer_name": "abhinav",
+        "items": [
+            {
+                "itemId": 2,
+                "name": "Veg Biryani",
+                "price": 180,
+                "quantity": 1
+            }
+        ],
+        "total": 180
+    },
+    {
+        "order_id": 2,
+        "customer_name": "abhinav",
+        "items": [
+            {
+                "itemId": 1,
+                "name": "Paneer Butter Masala",
+                "price": 220,
+                "quantity": 1.5
+            }
+        ],
+        "total": 330.0
+    },
+    {
+        "order_id": 3,
+        "customer_name": "abhinav",
+        "items": [
+            {
+                "itemId": 1,
+                "name": "Paneer Butter Masala",
+                "price": 220,
+                "quantity": 0.5
+            }
+        ],
+        "total": 110.0
+    },
+    {
+        "order_id": 4,
+        "customer_name": "abhinav",
+        "items": [
+            {
+                "itemId": 1,
+                "name": "Paneer Butter Masala",
+                "price": 220,
+                "quantity": 0.5
+            }
+        ],
+        "total": 110.0
+    },
+    {
+        "order_id": 5,
+        "customer_name": "abhinav",
+        "items": [
+            {
+                "itemId": 5,
+                "name": "Coffee",
+                "price": 50,
+                "quantity": 1.0
+            }
+        ],
+        "total": 50.0
+    }
+]

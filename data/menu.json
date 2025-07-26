@@ -1,5 +1,27 @@
 [
-    {"id": 1, "name": "Paneer Butter Masala", "price": 220},
-    {"id": 2, "name": "Veg Biryani", "price": 180},
-    {"id": 3, "name": "Masala Dosa", "price": 100}
+    {
+        "id": 1,
+        "name": "Paneer Butter Masala",
+        "price": 220
+    },
+    {
+        "id": 2,
+        "name": "Veg Biryani",
+        "price": 180
+    },
+    {
+        "id": 3,
+        "name": "Masala Dosa",
+        "price": 100
+    },
+    {
+        "id": 4,
+        "name": "Parantha",
+        "price": 100
+    },
+    {
+        "id": 5,
+        "name": "Coffee",
+        "price": 50
+    }
 ]
