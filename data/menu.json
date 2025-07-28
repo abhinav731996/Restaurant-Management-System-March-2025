@@ -1,27 +1,88 @@
-[
+{
+  "breakfast": [
     {
-        "id": 1,
-        "name": "Paneer Butter Masala",
-        "price": 220
+      "id": 1,
+      "name": "Masala Dosa",
+      "price": 100
     },
     {
-        "id": 2,
-        "name": "Veg Biryani",
-        "price": 180
+      "id": 2,
+      "name": "Parantha",
+      "price": 100
     },
     {
-        "id": 3,
-        "name": "Masala Dosa",
-        "price": 100
+      "id": 3,
+      "name": "Poha",
+      "price": 80
     },
     {
-        "id": 4,
-        "name": "Parantha",
-        "price": 100
+      "id": 4,
+      "name": "Idli Sambar",
+      "price": 90
     },
     {
-        "id": 5,
-        "name": "Coffee",
-        "price": 50
+      "id": 5,
+      "name": "Coffee",
+      "price": 50
+    },
+    {
+      "id": 6,
+      "name": "Tea",
+      "price": 40
     }
-]
+  ],
+  "lunch": [
+    {
+      "id": 7,
+      "name": "Veg Biryani",
+      "price": 180
+    },
+    {
+      "id": 8,
+      "name": "Paneer Butter Masala",
+      "price": 220
+    },
+    {
+      "id": 9,
+      "name": "Dal Makhani",
+      "price": 150
+    },
+    {
+      "id": 10,
+      "name": "Butter Naan (2 pcs)",
+      "price": 60
+    },
+    {
+      "id": 11,
+      "name": "Mix Veg",
+      "price": 160
+    }
+  ],
+  "dinner": [
+    {
+      "id": 12,
+      "name": "Shahi Paneer",
+      "price": 230
+    },
+    {
+      "id": 13,
+      "name": "Chole Bhature",
+      "price": 130
+    },
+    {
+      "id": 14,
+      "name": "Jeera Rice",
+      "price": 120
+    },
+    {
+      "id": 15,
+      "name": "Aloo Gobi",
+      "price": 140
+    },
+    {
+      "id": 16,
+      "name": "Roti (2 pcs)",
+      "price": 40
+    }
+  ]
+}

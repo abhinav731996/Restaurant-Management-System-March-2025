@@ -1,8 +1,11 @@
 import json
+import os
 
 menuFile = "data/menu.json"
 
 def loadMenu():
+    if not os.path.exists(menuFile):
+        return []
     with open(menuFile) as file:
         return json.load(file)
 
@@ -15,12 +18,20 @@ def displayMenu():
 
     print("-------- Menu --------")
 
-    for item in menu:
-        print(f"{item["id"]}.item{item["name"]}-{item["price"]}")
+    for category, item in menu.items():
+        print(f"\n---- {category.capitalize()} ----")
+        for item in item:
+            print(f"{item['id']}. {item['name']} - {item['price']}")
 
 def addMenuItem():
     menu = loadMenu()
-    newId = int(max([item['id'] for item in menu], default=0)+1)
+    category = input("Enter category(beakfast/lunch/dinner): ")
+    
+    if category not in menu:
+        print("Invalid category")
+        return
+    
+    newId = int(max([item['id'] for cat_item in menu.values() for item in cat_item], default=0)+1)
     name = input("Enter item name: ")
     price = int(input("Enter price: "))
     menu.append({"id":newId, "name": name, "price":price})
