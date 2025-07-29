@@ -5,7 +5,7 @@ menuFile = "data/menu.json"
 
 def loadMenu():
     if not os.path.exists(menuFile):
-        return []
+        return {"breakfast": [], "lunch": [], "dinner": [], "southIndian": [], "chinese": [], "drinks": [], "desserts": [], "snacks": []}
     with open(menuFile) as file:
         return json.load(file)
 
@@ -18,14 +18,14 @@ def displayMenu():
 
     print("-------- Menu --------")
 
-    for category, item in menu.items():
+    for category, items in menu.items():
         print(f"\n---- {category.capitalize()} ----")
-        for item in item:
+        for item in items:
             print(f"{item['id']}. {item['name']} - {item['price']}")
 
 def addMenuItem():
     menu = loadMenu()
-    category = input("Enter category(beakfast/lunch/dinner): ")
+    category = input("Enter category(breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ").lower()
     
     if category not in menu:
         print("Invalid category")
@@ -34,35 +34,58 @@ def addMenuItem():
     newId = int(max([item['id'] for cat_item in menu.values() for item in cat_item], default=0)+1)
     name = input("Enter item name: ")
     price = int(input("Enter price: "))
-    menu.append({"id":newId, "name": name, "price":price})
+    menu[category].append({"id":newId, "name": name, "price":price})
 
     saveMenu(menu)
     print("Item add successfully!!")
     
 def updateMenuItem():
     menu = loadMenu()
-    displayMenu()
-    IDtoUpdate = int(input("Enter ID to update: "))
-    for item in menu:
-        if item["id"] == IDtoUpdate:
-            item["name"] = input("Enter new name: ")
-            item["price"] = input("Enter new price: ")
 
-            saveMenu(menu)
-            print("Item update successfully!!")
-            return
-    print("Item not found.")
+    category = input("Enter category(breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ")
+
+    if category not in menu:
+        print("Invalid category")
+        return
+
+    displayMenu()
+    try:
+        IDtoUpdate = int(input("Enter ID to update: "))
+        for item in menu[category]:
+            if item["id"] == IDtoUpdate:
+                item["name"] = input("Enter new name: ")
+                item["price"] = int(input("Enter new price: "))
+
+                saveMenu(menu)
+                print("Item update successfully!!")
+                return
+        print("Item not found.")
+    except ValueError:
+        print("Invalid input. please enter valid input")
+
 
 def deleteMenuItem():
     menu = loadMenu()
+
+    category = input("Enter category(breakfast/lunch/dinner/southIndian/chinese/drinks/desserts): ")
+
+    if category not in menu:
+        print("Invalid category")
+        return
+    
     displayMenu()
-    IDtoDelete = int(input("enter ID to delete: "))
-    newMenu = [item for item in menu if item["id"] != IDtoDelete]
-    if len(newMenu) != len(menu):
-        saveMenu(newMenu)
-        print("Item delete successfully!! ")
-    else:
-        print("Item not found.")
+    try:
+        IDtoDelete = int(input("Enter ID to delete: "))
+        original_len = len(menu[category])
+        menu[category] = [item for item in menu[category] if item["id"] != IDtoDelete]
+
+        if len(menu[category]) < original_len:
+            saveMenu(menu)  
+            print("Item deleted successfully!")
+        else:
+            print("Item not found.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
 
 def adminMenu():
     while True:

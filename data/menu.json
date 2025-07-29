@@ -1,88 +1,268 @@
 {
-  "breakfast": [
-    {
-      "id": 1,
-      "name": "Masala Dosa",
-      "price": 100
-    },
-    {
-      "id": 2,
-      "name": "Parantha",
-      "price": 100
-    },
-    {
-      "id": 3,
-      "name": "Poha",
-      "price": 80
-    },
-    {
-      "id": 4,
-      "name": "Idli Sambar",
-      "price": 90
-    },
-    {
-      "id": 5,
-      "name": "Coffee",
-      "price": 50
-    },
-    {
-      "id": 6,
-      "name": "Tea",
-      "price": 40
-    }
-  ],
-  "lunch": [
-    {
-      "id": 7,
-      "name": "Veg Biryani",
-      "price": 180
-    },
-    {
-      "id": 8,
-      "name": "Paneer Butter Masala",
-      "price": 220
-    },
-    {
-      "id": 9,
-      "name": "Dal Makhani",
-      "price": 150
-    },
-    {
-      "id": 10,
-      "name": "Butter Naan (2 pcs)",
-      "price": 60
-    },
-    {
-      "id": 11,
-      "name": "Mix Veg",
-      "price": 160
-    }
-  ],
-  "dinner": [
-    {
-      "id": 12,
-      "name": "Shahi Paneer",
-      "price": 230
-    },
-    {
-      "id": 13,
-      "name": "Chole Bhature",
-      "price": 130
-    },
-    {
-      "id": 14,
-      "name": "Jeera Rice",
-      "price": 120
-    },
-    {
-      "id": 15,
-      "name": "Aloo Gobi",
-      "price": 140
-    },
-    {
-      "id": 16,
-      "name": "Roti (2 pcs)",
-      "price": 40
-    }
-  ]
+    "breakfast": [
+        {
+            "id": 1,
+            "name": "Poha",
+            "price": 80
+        },
+        {
+            "id": 2,
+            "name": "Aloo Parantha",
+            "price": 100
+        },
+        {
+            "id": 3,
+            "name": "Masala Omelette",
+            "price": 90
+        },
+        {
+            "id": 4,
+            "name": "Chana Kulcha",
+            "price": 110
+        },
+        {
+            "id": 5,
+            "name": "Upma",
+            "price": 85
+        },
+        {
+            "id": 6,
+            "name": "Cornflakes with Milk",
+            "price": 70
+        }
+    ],
+    "lunch": [
+        {
+            "id": 7,
+            "name": "Veg Biryani",
+            "price": 180
+        },
+        {
+            "id": 8,
+            "name": "Paneer Butter Masala",
+            "price": 220
+        },
+        {
+            "id": 9,
+            "name": "Dal Makhani",
+            "price": 150
+        },
+        {
+            "id": 10,
+            "name": "Butter Naan (2 pcs)",
+            "price": 60
+        },
+        {
+            "id": 11,
+            "name": "Mix Veg",
+            "price": 160
+        },
+        {
+            "id": 12,
+            "name": "Stuffed Capsicum",
+            "price": 170
+        },
+        {
+            "id": 13,
+            "name": "Rajma Chawal",
+            "price": 140
+        }
+    ],
+    "dinner": [
+        {
+            "id": 14,
+            "name": "Shahi Paneer",
+            "price": 230
+        },
+        {
+            "id": 15,
+            "name": "Chole Bhature",
+            "price": 130
+        },
+        {
+            "id": 16,
+            "name": "Jeera Rice",
+            "price": 120
+        },
+        {
+            "id": 17,
+            "name": "Aloo Gobi",
+            "price": 140
+        },
+        {
+            "id": 18,
+            "name": "Roti (2 pcs)",
+            "price": 40
+        },
+        {
+            "id": 19,
+            "name": "Kadhai Paneer",
+            "price": 210
+        },
+        {
+            "id": 20,
+            "name": "Matar Paneer",
+            "price": 200
+        }
+    ],
+    "southIndian": [
+        {
+            "id": 21,
+            "name": "Dosa",
+            "price": 200
+        },
+        {
+            "id": 22,
+            "name": "Idli Sambar",
+            "price": 90
+        },
+        {
+            "id": 23,
+            "name": "Medu Vada",
+            "price": 80
+        },
+        {
+            "id": 24,
+            "name": "Uttapam",
+            "price": 120
+        },
+        {
+            "id": 25,
+            "name": "Filter Coffee",
+            "price": 60
+        }
+    ],
+    "chinese": [
+        {
+            "id": 26,
+            "name": "Spring Roll",
+            "price": 150
+        },
+        {
+            "id": 27,
+            "name": "Veg Noodles",
+            "price": 140
+        },
+        {
+            "id": 28,
+            "name": "Chilli Paneer",
+            "price": 180
+        },
+        {
+            "id": 29,
+            "name": "Fried Rice",
+            "price": 130
+        },
+        {
+            "id": 30,
+            "name": "Manchurian",
+            "price": 160
+        }
+    ],
+    "drinks": [
+        {
+            "id": 31,
+            "name": "Tea",
+            "price": 30
+        },
+        {
+            "id": 32,
+            "name": "Coffee",
+            "price": 50
+        },
+        {
+            "id": 33,
+            "name": "Cold Coffee",
+            "price": 90
+        },
+        {
+            "id": 34,
+            "name": "Lassi",
+            "price": 70
+        },
+        {
+            "id": 35,
+            "name": "Fresh Lime Soda",
+            "price": 60
+        },
+        {
+            "id": 36,
+            "name": "Mango Shake",
+            "price": 100
+        }
+    ],
+    "desserts": [
+        {
+            "id": 37,
+            "name": "Gulab Jamun",
+            "price": 80
+        },
+        {
+            "id": 38,
+            "name": "Rasgulla",
+            "price": 70
+        },
+        {
+            "id": 39,
+            "name": "Ice Cream (Scoop)",
+            "price": 50
+        },
+        {
+            "id": 40,
+            "name": "Kheer",
+            "price": 90
+        },
+        {
+            "id": 41,
+            "name": "Halwa",
+            "price": 100
+        }
+    ],
+    "snacks": [
+        {
+            "id": 42,
+            "name": "Samosa",
+            "price": 25
+        },
+        {
+            "id": 43,
+            "name": "Pav Bhaji",
+            "price": 100
+        },
+        {
+            "id": 44,
+            "name": "Bread Pakoda",
+            "price": 60
+        },
+        {
+            "id": 45,
+            "name": "French Fries",
+            "price": 90
+        },
+        {
+            "id": 46,
+            "name": "Chaat",
+            "price": 70
+        },
+        {
+            "id": 47,
+            "name": "Paneer Tikka",
+            "price": 160
+        },
+        {
+            "id": 48,
+            "name": "Kachori",
+            "price": 40
+        },
+        {
+            "id": 49,
+            "name": "Pakora Platter",
+            "price": 100
+        },
+        {
+            "id": 50,
+            "name": "Moong Dal Chilla",
+            "price": 90
+        }
+    ]
 }

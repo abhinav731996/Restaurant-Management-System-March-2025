@@ -32,10 +32,12 @@ def takeOrder():
         if itemId.lower() == "done":
             break
 
-        item = next((i for i in menu if str(i["id"])==itemId), None)
+        all_items = [item for items in menu.values() for item in items] 
+        item = next((i for i in all_items if str(i["id"]) == itemId), None)
+
 
         if item:
-            qty = float(input(f"Enter quantity for{item["name"]}: "))
+            qty = float(input(f"Enter quantity for {item['name']}: "))
             total += item["price"]*qty
             orderItem.append({
                 "itemId": item["id"],
@@ -75,8 +77,9 @@ def viewAllOrders():
 
     for order in order:
         print(f"\nOrder id: {order["order_id"]}, Customer: {order["customer_name"]}, Total: {order["total"]}")
+
         for item in order["items"]:
-            print(f"  {item["name"]} x {item["quantity"]} = {item["price"] * item["quantity"]}")
+            print(f"  {item['name']} x {item['quantity']} = ₹{item['price'] * item['quantity']}")
         print("-" * 40)
 
 def staffMenu():
