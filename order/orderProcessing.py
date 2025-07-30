@@ -1,109 +1,125 @@
 import json
 import os
-from menu.menuManagement import displayMenu, loadMenu
-from bill.generatingBill import generatingBill
-from table.tableBooking import tableBookingMenu
+from menu.menu_manager import MenuManager  
+from bill.generatingBill import generatingBill  
+from table.table_booking import tableBookingMenu  
 
-orderFile = "data/order.json"
+MENU_FILE = "data/menu.json"
+ORDER_FILE = "data/orders.json"
 
-def loadOrder():
-    if not os.path.exists(orderFile):
-        return []
-    with open(orderFile) as file:
-        return json.load(file)
+class OrderManager:
 
-def saveOrder(order):
-    with open(orderFile, "w") as file:
-        json.dump(order, file, indent=4)
+    def __init__(self):
+        if not os.path.exists(ORDER_FILE):
+            with open(ORDER_FILE, "w") as f:
+                json.dump([], f)
 
-def takeOrder():
-    menu = loadMenu()
-    if not menu:
-        print("Menu is empty. Ask admin to add Items")
-        return
-    customerName = input("Enter coustomer name: ")
-    orderItem = []
-    total = 0
+    def loadOrder(self):
+        if not os.path.exists(ORDER_FILE):
+            return []
+        with open(ORDER_FILE) as file:
+            return json.load(file)
 
-    displayMenu()
-    
-    while True:
-        itemId = input("Enter Id to add or done to finish: ")
-        if itemId.lower() == "done":
-            break
+    def saveOrder(self, orders):
+        with open(ORDER_FILE, "w") as file:
+            json.dump(orders, file, indent=4)
 
-        all_items = [item for items in menu.values() for item in items] 
-        item = next((i for i in all_items if str(i["id"]) == itemId), None)
+    def takeOrder(self):
+        menu_mgr = MenuManager()
+        menu = menu_mgr.loadMenu()
+        if not menu:
+            print("Menu is empty. Ask admin to add items.")
+            return
 
+        customerName = input("Enter customer name: ")
+        orderItems = []
+        total = 0
 
-        if item:
-            qty = float(input(f"Enter quantity for {item['name']}: "))
-            total += item["price"]*qty
-            orderItem.append({
-                "itemId": item["id"],
-                "name": item["name"],
-                "price": item["price"],
-                "quantity": qty
-            })
-        else:
-            print("Item not found.")
+        menu_mgr.displayMenu()
 
-    if not orderItem:
-        print("No item selected: ")
-        return
-    
-    orderData = loadOrder()
-    orderId = len(orderData)+1
+        while True:
+            itemId = input("\nEnter ID to add (or type 'done'): ")
+            if itemId.lower() == "done":
+                break
 
-    order = {
-        "order_id": orderId,
-        "customer_name": customerName,
-        "items": orderItem,
-        "total": total
-    }
-        
-    orderData.append(order)
-    saveOrder(orderData)
+            all_items = [item for items in menu.values() for item in items]
+            item = next((i for i in all_items if str(i["id"]) == itemId), None)
 
-    print(f"\n Order placed successfully! Total amount = {total}")
+            if item:
+                try:
+                    qty = float(input(f"Enter quantity for {item['name']}: "))
+                    if qty <= 0 or qty > 50:
+                        print("Quantity must be between 1 and 50.")
+                        continue
+                    item_total = item["price"] * qty
+                    total += item_total
+                    orderItems.append({
+                        "itemId": item["id"],
+                        "name": item["name"],
+                        "price": item["price"],
+                        "quantity": qty
+                    })
+                except ValueError:
+                    print("Invalid quantity input.")
+            else:
+                print("Item not found.")
 
-def viewAllOrders():
-    order = loadOrder()
-    if not order:
-        print("no order found")
-        return
+        if not orderItems:
+            print("No items selected.")
+            return
 
-    print("\n------ All order ------")
+        all_orders = self.loadOrder()
+        orderId = len(all_orders) + 1
 
-    for order in order:
-        print(f"\nOrder id: {order["order_id"]}, Customer: {order["customer_name"]}, Total: {order["total"]}")
+        order = {
+            "order_id": orderId,
+            "customer_name": customerName,
+            "items": orderItems,
+            "total": total,
+            "status": "pending"
+        }
 
-        for item in order["items"]:
-            print(f"  {item['name']} x {item['quantity']} = ₹{item['price'] * item['quantity']}")
-        print("-" * 40)
+        all_orders.append(order)
+        self.saveOrder(all_orders)
 
-def staffMenu():
-    while True:
-        print("\n------ Staff Menu ------")
-        print("1 - Take order")
-        print("2 - View all order")
-        print("3 - Generate bill")
-        print("4 - Table Booking")
-        print("5 - Exit")
+        print(f"\nOrder placed successfully! Total amount = {total}")
 
-        choice = int(input("Enter your choice: "))
+    def viewAllOrders(self):
+        orders = self.loadOrder()
+        if not orders:
+            print("No orders found.")
+            return
 
-        if choice == 1:
-            takeOrder()
-        elif choice == 2:
-            viewAllOrders()
-        elif choice == 3:
-            generatingBill()
-        elif choice == 4:
-            tableBookingMenu()
-        elif choice == 5:
-            break
-        else:
-            print("Invalid choice, try again!!")
+        print("\n------ All Orders ------")
+        for order in orders:
+            print(f"\nOrder ID: {order['order_id']}, Customer: {order['customer_name']}, Total: {order['total']}")
+            for item in order["items"]:
+                subtotal = item["price"] * item["quantity"]
+                print(f"  {item['name']} x {item['quantity']} = {subtotal}")
+            print("-" * 40)
 
-        
+    def staffMenu(self):
+        while True:
+            print("\n------ Staff Menu ------")
+            print("1 - Take order")
+            print("2 - View all orders")
+            print("3 - Generate bill")
+            print("4 - Table booking")
+            print("5 - Exit")
+
+            try:
+                choice = int(input("Enter your choice: "))
+                if choice == 1:
+                    self.takeOrder()
+                elif choice == 2:
+                    self.viewAllOrders()
+                elif choice == 3:
+                    generatingBill()
+                elif choice == 4:
+                    tableBookingMenu()
+                elif choice == 5:
+                    break
+                else:
+                    print("Invalid choice, try again.")
+            except ValueError:
+                print("Enter a valid number.")

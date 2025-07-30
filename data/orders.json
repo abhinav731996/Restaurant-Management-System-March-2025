@@ -1,0 +1,16 @@
+[
+    {
+        "order_id": 1,
+        "customer_name": "Abhi",
+        "items": [
+            {
+                "itemId": 1,
+                "name": "Poha",
+                "price": 80,
+                "quantity": 2.0
+            }
+        ],
+        "total": 160.0,
+        "status": "pending"
+    }
+]

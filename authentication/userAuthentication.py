@@ -1,26 +1,28 @@
 
 import json
-
 import getpass
 
-def login():
-    try:
-        with open("data/user.json") as file:
-            users = json.load(file)
-    except FileNotFoundError:
-        print("File not found")
-        return None
-    
-    username = input("Username: ")
-    password = getpass.getpass("Password: ")
+Userfile = "data/user.json"
+class Login:
 
-    for user in users:
-        if user["username"] == username and user["password"] == password:
-            print(f"\nLogin successfully. Welcome {username}")
-            return user
-    
-    print("\nInvalid credentials.")
-    
-    return None
-         
+    def __init__(self):
+        pass
+
+    def authenticateUser(self):
+        
+        username = input("Username: ")
+        password = getpass.getpass("Password: ")
+
+        with open (Userfile, "r") as file:
+            users = json.load(file)
+
+        for user in users:
+            if user["username"] == username and user["password"] == password:
+                print(f"\nLogin successfully. Welcome {username}!")
+                return user
+        
+        print("\nInvalid credentials.")
+        
+        return None
+            
 

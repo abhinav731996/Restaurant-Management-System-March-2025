@@ -1,23 +1,35 @@
-from authentication.userAuthentication import login
-from menu.menuManagement import adminMenu
-from order.orderProcessing import staffMenu
+from authentication.signup import Signup
+from authentication.userAuthentication import Login
+from menu.menu_manager import MenuManager
+from order.orderProcessing import OrderManager
 
-def menu():
-    print("---------- Restaurent managemnet ----------")
-     
-    user = login()
+def main():
+    print("---------- Restaurant Management ----------")
+    print("1. Sign Up")
+    print("2. Login")
+    choice = input("Choose option: ")
 
-    if user:
-        if user["role"] == "admin":
-            adminMenu()
-        elif user["role"] == "staff":
-            staffMenu()
+    user = None
 
-        else:
-            print("Invalid role!!")
-
+    if choice == "1":
+        Signup().createUser()
+        return 
+    elif choice == "2":
+        user = Login().authenticateUser()
+        if not user:
+            return
+        print(f"Access granted for {user['role']}")
     else:
-        print("Login fail")
+        print("Invalid option.")
+        return
 
+    
+    if user["role"] == "admin":
+        MenuManager().adminMenu()
+    elif user["role"] == "staff":
+        OrderManager().staffMenu()
+    else:
+        print("Unknown role!")
 
-menu()
+if __name__ == "__main__":
+    main()
