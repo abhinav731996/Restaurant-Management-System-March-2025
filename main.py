@@ -7,6 +7,7 @@ def main():
     print("---------- Restaurant Management ----------")
     print("1. Sign Up")
     print("2. Login")
+    print("3. Exit")
     choice = input("Choose option: ")
 
     user = None
@@ -19,6 +20,9 @@ def main():
         if not user:
             return
         print(f"Access granted for {user['role']}")
+    elif choice == "3":
+        print("Exit")
+        return
     else:
         print("Invalid option.")
         return
