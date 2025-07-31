@@ -38,25 +38,26 @@ class OrderManager:
         menu_mgr.displayMenu()
 
         while True:
-            itemId = input("\nEnter ID to add (or type 'done'): ")
-            if itemId.lower() == "done":
+            itemName = input("\nEnter item name to add (or type 'done'): ").strip().lower()
+            if itemName == "done":
                 break
 
+            # Flatten and search all items by name
             all_items = [item for items in menu.values() for item in items]
-            item = next((i for i in all_items if str(i["id"]) == itemId), None)
+            matched_item = next((i for i in all_items if i["name"].lower() == itemName), None)
 
-            if item:
+            if matched_item:
                 try:
-                    qty = float(input(f"Enter quantity for {item['name']}: "))
+                    qty = float(input(f"Enter quantity for {matched_item['name']}: "))
                     if qty <= 0 or qty > 50:
                         print("Quantity must be between 1 and 50.")
                         continue
-                    item_total = item["price"] * qty
+                    item_total = matched_item["price"] * qty
                     total += item_total
                     orderItems.append({
-                        "itemId": item["id"],
-                        "name": item["name"],
-                        "price": item["price"],
+                        "itemId": matched_item["id"],
+                        "name": matched_item["name"],
+                        "price": matched_item["price"],
                         "quantity": qty
                     })
                 except ValueError:
@@ -82,7 +83,8 @@ class OrderManager:
         all_orders.append(order)
         self.saveOrder(all_orders)
 
-        print(f"\nOrder placed successfully! Total amount = {total}")
+        print(f"\nOrder placed successfully! Total amount = ₹{total}")
+
 
     def viewAllOrders(self):
         orders = self.loadOrder()
