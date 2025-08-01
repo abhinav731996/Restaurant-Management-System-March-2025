@@ -1,7 +1,7 @@
 from authentication.signup import Signup
 from authentication.userAuthentication import Login
-from menu.menu_manager import MenuManager
-from order.orderProcessing import OrderManager
+from domain.menu.menu_manager import MenuManager
+from domain.order.orderProcessing import OrderManager
 
 def main():
     print("---------- Restaurant Management ----------")
@@ -21,7 +21,7 @@ def main():
             return
         print(f"Access granted for {user['role']}")
     elif choice == "3":
-        print("Exit")
+        print("Exit...")
         return
     else:
         print("Invalid option.")
@@ -35,5 +35,5 @@ def main():
     else:
         print("Unknown role!")
 
-if __name__ == "__main__":
-    main()
+
+main()

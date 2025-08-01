@@ -1,7 +1,7 @@
 import json
 import os
 
-menuFile = "data/menu.json"
+menuFile = "database/menu.json"
 
 class MenuManager:
 
@@ -28,7 +28,7 @@ class MenuManager:
         for category, items in menu.items():
             print(f"\n---- {category.capitalize()} ----")
             for item in items:
-                print(f"{item['id']}. {item['name']} - ₹{item['price']}")
+                print(f"{item['id']}. {item['name']} - {item['price']}")
 
     def addMenuItem(self):
         menu = self.loadMenu()
@@ -48,7 +48,7 @@ class MenuManager:
 
     def updateMenuItem(self):
         menu = self.loadMenu()
-        category = input("Enter category: ").lower()
+        category = input("Enter category(breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ").lower()
 
         if category not in menu:
             print("Invalid category.")

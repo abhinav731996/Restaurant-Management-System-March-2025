@@ -1,8 +1,8 @@
 
 import json
-import getpass
+import pwinput
 
-Userfile = "data/user.json"
+Userfile = "database/user.json"
 class Login:
 
     def __init__(self):
@@ -11,7 +11,7 @@ class Login:
     def authenticateUser(self):
         
         username = input("Username: ")
-        password = getpass.getpass("Password: ")
+        password = pwinput.pwinput(prompt="Password: ", mask="*")
 
         with open (Userfile, "r") as file:
             users = json.load(file)

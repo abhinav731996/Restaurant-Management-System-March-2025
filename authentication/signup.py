@@ -1,8 +1,8 @@
 import json
 import os
-from getpass import getpass
+import pwinput
 
-Userfile = "data/user.json"
+Userfile = "database/user.json"
 
 class Signup:
 
@@ -14,7 +14,7 @@ class Signup:
 
     def createUser(self):
         username = input("Enter Username: ")
-        password = getpass("Enter Password: ")
+        password = pwinput.pwinput(prompt="Enter Password: ", mask="*")
         role = input("Enter role(admin/staff): ").lower()
 
         if role not in ["admin","staff"]:

@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 
-bookingFile = "data/booking.json"
+bookingFile = "database/booking.json"
 
 TIME_SLOTS = ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"]
 
@@ -63,7 +63,6 @@ def bookTable():
         print("Invalid duration.")
         return
 
-    # Check for overlapping bookings
     availableTables = []
     for table in allTables:
         conflict = False

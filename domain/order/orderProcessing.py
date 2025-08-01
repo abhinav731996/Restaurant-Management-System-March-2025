@@ -1,11 +1,11 @@
 import json
 import os
-from menu.menu_manager import MenuManager  
-from bill.generatingBill import generatingBill  
-from table.table_booking import tableBookingMenu  
+from domain.menu.menu_manager import MenuManager  
+from domain.bill.generatingBill import generatingBill  
+from domain.table.table_booking import tableBookingMenu  
 
-MENU_FILE = "data/menu.json"
-ORDER_FILE = "data/orders.json"
+MENU_FILE = "database/menu.json"
+ORDER_FILE = "database/orders.json"
 
 class OrderManager:
 
