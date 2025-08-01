@@ -15,7 +15,11 @@ def saveOrders(orders):
 
 def generatingBill():
     orders = loadOrders()
-    pending_orders = [o for o in orders if o.get("status") != "paid"]
+    pending_orders = []
+    for order in orders:
+        if order.get("status") != "paid":
+            pending_orders.append(order)
+
 
     if not pending_orders:
         print("No pending orders to bill.")
@@ -31,11 +35,15 @@ def generatingBill():
         print("Invalid Order ID.")
         return
 
-    selected_order = next((o for o in orders if o['order_id'] == orderId and o.get("status") != "paid"), None)
+    selected_order = None
+    for o in orders:
+        if o["order_id"] == orderId and o.get("status") != "paid":
+            selected_order = o
+            break
 
-    if not selected_order:
-        print("Order not found or already paid.")
-        return
+        if not selected_order:
+            print("Order not found or already paid.")
+            return
 
     subTotal = selected_order["total"]
     taxRate = 0.05
@@ -58,12 +66,12 @@ def generatingBill():
     print("-" * 30)
     for item in selected_order['items']:
         line_total = item["price"] * item["quantity"]
-        print(f"{item['name']} x {item['quantity']} = ₹{line_total}")
+        print(f"{item['name']} x {item['quantity']} = {line_total}")
     print("-" * 30)
-    print(f"Subtotal     : ₹{subTotal:.2f}")
-    print(f"Tax (5%)     : ₹{tax:.2f}")
-    print(f"Discount     : -₹{discount:.2f}")
-    print(f"Grand Total  : ₹{grandTotal:.2f}")
+    print(f"Subtotal     : {subTotal:.2f}")
+    print(f"Tax (5%)     : {tax:.2f}")
+    print(f"Discount     : -{discount:.2f}")
+    print(f"Grand Total  : {grandTotal:.2f}")
     print("-" * 30)
 
     confirm = input("Mark order as paid? (y/n): ").lower()
