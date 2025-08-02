@@ -1,0 +1,12 @@
+
+================================================================================
+🕒 TIMESTAMP : 2025-08-02 09:38:44
+❌ ERROR TYPE: Exception
+📄 MESSAGE    : invalid literal for int() with base 10: 'asdas'
+🔍 TRACEBACK  :
+Traceback (most recent call last):
+  File "/Users/abcd/Desktop/Fullstack Course/Python/Resturant management /Restaurant-Management-System-March-2025/authentication/userAuthentication.py", line 14, in authenticateUser
+    username = int(input("Username: "))
+ValueError: invalid literal for int() with base 10: 'asdas'
+
+================================================================================

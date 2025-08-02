@@ -1,6 +1,8 @@
 import json
 import os
 import pwinput
+from logs.log import error_logs
+
 
 Userfile = "database/user.json"
 
@@ -13,27 +15,31 @@ class Signup:
 
 
     def createUser(self):
-        username = input("Enter Username: ")
-        password = pwinput.pwinput(prompt="Enter Password: ", mask="*")
-        role = input("Enter role(admin/staff): ").lower()
+        try:
+            username = input("Enter Username: ")
+            password = pwinput.pwinput(prompt="Enter Password: ", mask="*")
+            role = input("Enter role(admin/staff): ").lower()
 
-        if role not in ["admin","staff"]:
-            print("Invalid role ")
-            return
-        
-        with open(Userfile, "r") as file:
-            users = json.load(file)
-
-        for user in users:
-            if user["username"] == username:
-                print("Username already exists!")
+            if role not in ["admin","staff"]:
+                print("Invalid role ")
                 return
+            
+            with open(Userfile, "r") as file:
+                users = json.load(file)
 
-        users.append({"username": username,
-                      "password": password,
-                      "role": role})
+            for user in users:
+                if user["username"] == username:
+                    print("Username already exists!")
+                    return
 
-        with open(Userfile, "w") as file:
-            json.dump(users, file, indent=4)
+            users.append({"username": username,
+                        "password": password,
+                        "role": role})
 
-        print(f"{role.capitalize()} '{username}' created successfully.")
+            with open(Userfile, "w") as file:
+                json.dump(users, file, indent=4)
+
+            print(f"{role.capitalize()} '{username}' created successfully.")
+
+        except Exception as e:
+            error_logs(e)
