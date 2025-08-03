@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 
 ORDER_FILE = "database/orders.json"  
 
@@ -15,19 +16,34 @@ def saveOrders(orders):
 
 def generatingBill():
     orders = loadOrders()
-    pending_orders = []
-    for order in orders:
-        if order.get("status") != "paid":
-            pending_orders.append(order)
 
+    
+    date_str = input("Enter date to filter orders (YYYY-MM-DD) or press Enter for all: ").strip()
+    if date_str:
+        try:
+            datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            print("Invalid date format.")
+            return
+        filtered = []
+        for o in orders:
+            dt = o.get("datetime", "")  
+            if dt.startswith(date_str):
+                filtered.append(o)
+    else:
+        filtered = orders
+
+    
+    pending_orders = [o for o in filtered if o.get("status") != "paid"]
 
     if not pending_orders:
-        print("No pending orders to bill.")
+        print("No pending orders to bill for that date.")
         return
 
     print("\n------ Pending Orders ------")
     for o in pending_orders:
-        print(f"Order ID: {o['order_id']}, Customer: {o['customer_name']}, Amount: ₹{o['total']}")
+        dt_display = o.get("datetime", "N/A")
+        print(f"Order ID: {o['order_id']}, Customer: {o['customer_name']}, Amount: ₹{o['total']}, DateTime: {dt_display}")
 
     try:
         orderId = int(input("\nEnter Order ID to generate bill: "))
@@ -35,20 +51,21 @@ def generatingBill():
         print("Invalid Order ID.")
         return
 
+    # Find selected pending order
     selected_order = None
-    for o in orders:
-        if o["order_id"] == orderId and o.get("status") != "paid":
+    for o in pending_orders:
+        if o["order_id"] == orderId:
             selected_order = o
             break
 
-        if not selected_order:
-            print("Order not found or already paid.")
-            return
+    if not selected_order:
+        print("Order not found or already paid.")
+        return
 
     subTotal = selected_order["total"]
     taxRate = 0.05
     tax = subTotal * taxRate
-    discount = 0
+    discount = 0.0
 
     applyDiscount = input("Apply discount? (y/n): ").lower()
     if applyDiscount == "y":
@@ -56,27 +73,32 @@ def generatingBill():
             discount = float(input("Enter discount amount: "))
         except ValueError:
             print("Invalid discount input. No discount applied.")
-            discount = 0
+            discount = 0.0
 
     grandTotal = subTotal + tax - discount
 
     print("\n====== CUSTOMER BILL ======")
-    print(f"Customer : {selected_order['customer_name']}")
-    print(f"Order ID : {selected_order['order_id']}")
+    print(f"Customer    : {selected_order['customer_name']}")
+    print(f"Order ID    : {selected_order['order_id']}")
+    print(f"Date/Time   : {selected_order.get('datetime', 'N/A')}")
     print("-" * 30)
-    for item in selected_order['items']:
-        line_total = item["price"] * item["quantity"]
-        print(f"{item['name']} x {item['quantity']} = {line_total}")
+    for item in selected_order.get('items', []):
+        line_total = item.get("price", 0) * item.get("quantity", 0)
+        print(f"{item.get('name')} x {item.get('quantity')} = {line_total:.2f}")
     print("-" * 30)
-    print(f"Subtotal     : {subTotal:.2f}")
-    print(f"Tax (5%)     : {tax:.2f}")
-    print(f"Discount     : -{discount:.2f}")
-    print(f"Grand Total  : {grandTotal:.2f}")
+    print(f"Subtotal    : {subTotal:.2f}")
+    print(f"Tax (5%)    : {tax:.2f}")
+    print(f"Discount    : -{discount:.2f}")
+    print(f"Grand Total : {grandTotal:.2f}")
     print("-" * 30)
 
     confirm = input("Mark order as paid? (y/n): ").lower()
     if confirm == "y":
-        selected_order["status"] = "paid"
+        
+        for o in orders:
+            if o["order_id"] == selected_order["order_id"]:
+                o["status"] = "paid"
+                break
         saveOrders(orders)
         print("Payment completed. Order marked as paid.")
     else:

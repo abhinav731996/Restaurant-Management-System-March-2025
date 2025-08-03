@@ -1,5 +1,6 @@
 import json
 import os
+from logs.log import error_logs
 
 menuFile = "database/menu.json"
 
@@ -31,64 +32,75 @@ class MenuManager:
                 print(f"{item['id']}. {item['name']} - {item['price']}")
 
     def addMenuItem(self):
-        menu = self.loadMenu()
-        category = input("Enter category (breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ").lower()
-        
-        if category not in menu:
-            print("Invalid category.")
-            return
-        
-        newId = int(max([item['id'] for cat in menu.values() for item in cat], default=0) + 1)
-        name = input("Enter item name: ")
-        price = int(input("Enter price: "))
-        menu[category].append({"id": newId, "name": name, "price": price})
+        try:
+            menu = self.loadMenu()
+            category = input("Enter category (breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ").lower()
+            
+            if category not in menu:
+                print("Invalid category.")
+                return
+            
+            newId = int(max([item['id'] for cat in menu.values() for item in cat], default=0) + 1)
+            name = input("Enter item name: ")
+            price = int(input("Enter price: "))
+            menu[category].append({"id": newId, "name": name, "price": price})
 
-        self.saveMenu(menu)
-        print("Item added successfully!")
+            self.saveMenu(menu)
+            print("Item added successfully!")
+        except Exception as e:
+            error_logs(e)
 
     def updateMenuItem(self):
-        menu = self.loadMenu()
-        category = input("Enter category(breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ").lower()
-
-        if category not in menu:
-            print("Invalid category.")
-            return
-
-        self.displayMenu()
         try:
-            IDtoUpdate = int(input("Enter ID to update: "))
-            for item in menu[category]:
-                if item["id"] == IDtoUpdate:
-                    item["name"] = input("Enter new name: ") or item["name"]
-                    item["price"] = int(input("Enter new price: ") or item["price"])
-                    self.saveMenu(menu)
-                    print("Item updated successfully!")
-                    return
-            print("Item not found.")
-        except ValueError:
-            print("Invalid input.")
+            menu = self.loadMenu()
+            category = input("Enter category(breakfast/lunch/dinner/southIndian/chinese/drinks/desserts/snacks): ").lower()
+
+            if category not in menu:
+                print("Invalid category.")
+                return
+
+            self.displayMenu()
+            try:
+                IDtoUpdate = int(input("Enter ID to update: "))
+                for item in menu[category]:
+                    if item["id"] == IDtoUpdate:
+                        item["name"] = input("Enter new name: ") or item["name"]
+                        item["price"] = int(input("Enter new price: ") or item["price"])
+                        self.saveMenu(menu)
+                        print("Item updated successfully!")
+                        return
+                print("Item not found.")
+            except ValueError:
+                print("Invalid input.")
+        except Exception as e:
+            error_logs(e)
+
 
     def deleteMenuItem(self):
-        menu = self.loadMenu()
-        category = input("Enter category: ").lower()
-
-        if category not in menu:
-            print("Invalid category.")
-            return
-
-        self.displayMenu()
         try:
-            IDtoDelete = int(input("Enter ID to delete: "))
-            original_len = len(menu[category])
-            menu[category] = [item for item in menu[category] if item["id"] != IDtoDelete]
+            menu = self.loadMenu()
+            category = input("Enter category: ").lower()
 
-            if len(menu[category]) < original_len:
-                self.saveMenu(menu)
-                print("Item deleted successfully!")
-            else:
-                print("Item not found.")
-        except ValueError:
-            print("Invalid input.")
+            if category not in menu:
+                print("Invalid category.")
+                return
+
+            self.displayMenu()
+            try:
+                IDtoDelete = int(input("Enter ID to delete: "))
+                original_len = len(menu[category])
+                menu[category] = [item for item in menu[category] if item["id"] != IDtoDelete]
+
+                if len(menu[category]) < original_len:
+                    self.saveMenu(menu)
+                    print("Item deleted successfully!")
+                else:
+                    print("Item not found.")
+            except ValueError:
+                print("Invalid input.")
+        except Exception as e:
+            error_logs(e)
+
 
     def adminMenu(self):
         while True:

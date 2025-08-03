@@ -3,6 +3,7 @@ import os
 from domain.menu.menu_manager import MenuManager  
 from domain.bill.generatingBill import generatingBill  
 from domain.table.table_booking import tableBookingMenu  
+from datetime import datetime
 
 MENU_FILE = "database/menu.json"
 ORDER_FILE = "database/orders.json"
@@ -24,6 +25,8 @@ class OrderManager:
         with open(ORDER_FILE, "w") as file:
             json.dump(orders, file, indent=4)
 
+    from datetime import datetime
+
     def takeOrder(self):
         menu_mgr = MenuManager()
         menu = menu_mgr.loadMenu()
@@ -42,7 +45,6 @@ class OrderManager:
             if itemName == "done":
                 break
 
-            # Flatten and search all items by name
             all_items = [item for items in menu.values() for item in items]
             matched_item = next((i for i in all_items if i["name"].lower() == itemName), None)
 
@@ -69,6 +71,18 @@ class OrderManager:
             print("No items selected.")
             return
 
+        # Date/time capture
+        use_custom = input("Enter custom date/time? (y/n): ").strip().lower()
+        if use_custom == "y":
+            dt_input = input("Enter date and time (YYYY-MM-DD HH:MM:SS): ").strip()
+            try:
+                order_datetime = datetime.strptime(dt_input, "%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                print("Invalid format. Using current date/time instead.")
+                order_datetime = datetime.now()
+        else:
+            order_datetime = datetime.now()
+
         all_orders = self.loadOrder()
         orderId = len(all_orders) + 1
 
@@ -77,13 +91,15 @@ class OrderManager:
             "customer_name": customerName,
             "items": orderItems,
             "total": total,
-            "status": "pending"
+            "status": "pending",
+            "datetime": order_datetime.strftime("%Y-%m-%d %H:%M:%S")
         }
 
         all_orders.append(order)
         self.saveOrder(all_orders)
 
         print(f"\nOrder placed successfully! Total amount = ₹{total}")
+
 
 
     def viewAllOrders(self):
