@@ -43,7 +43,7 @@ def generatingBill():
     print("\n------ Pending Orders ------")
     for o in pending_orders:
         dt_display = o.get("datetime", "N/A")
-        print(f"Order ID: {o['order_id']}, Customer: {o['customer_name']}, Amount: ₹{o['total']}, DateTime: {dt_display}")
+        print(f"Order ID: {o['order_id']}, Customer: {o['customer_name']}, Amount: {o['total']}, DateTime: {dt_display}")
 
     try:
         orderId = int(input("\nEnter Order ID to generate bill: "))
@@ -51,7 +51,7 @@ def generatingBill():
         print("Invalid Order ID.")
         return
 
-    # Find selected pending order
+   
     selected_order = None
     for o in pending_orders:
         if o["order_id"] == orderId:
