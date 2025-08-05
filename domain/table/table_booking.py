@@ -44,7 +44,7 @@ def isTimeOverlap(start1, duration1, start2, duration2):
 
 def bookTable():
     bookings = loadBooking()
-    allTables = list(range(1, 11))  # Total 10 tables
+    allTables = list(range(1, 11)) 
 
     bookingDate = input("Enter booking date (YYYY-MM-DD): ").strip()
     print("Available time slots:", TIME_SLOTS)

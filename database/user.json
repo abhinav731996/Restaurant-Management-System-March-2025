@@ -10,13 +10,13 @@
         "role": "staff"
     },
     {
-        "username": "abhinav",
-        "password": "abhinav123",
-        "role": "admin"
-    },
-    {
         "username": "ashtha",
         "password": "ashtha123",
         "role": "admin"
+    },
+    {
+        "username": "abhinav",
+        "password": "abhinav123",
+        "role": "staff"
     }
 ]
